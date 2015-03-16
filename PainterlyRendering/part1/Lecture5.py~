@@ -12,7 +12,7 @@ import random
 import time
 import matplotlib.image as mpimg
 import scipy as sci
-
+sdfasf
 # Set threshold of printing to not a number 
 np.set_printoptions(threshold = np.nan)  
 

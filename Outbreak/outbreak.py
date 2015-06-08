@@ -216,31 +216,39 @@ def visit_next(visited, unvisited, distance):
     # Gets the shortest distance from
     # the unvisited list into the visited list
     shortest_distance = get_closest(unvisited_list)
-
-    for i in unvisited_list:
+    unvisited_list_loop = unvisited_list[:]
+    for i in unvisited_list_loop:
         # Takes the shortest distance in the unvisited list
         if shortest_distance == i:
             # Adds the shortest distance from the unvisited list
             # to the visited list
             visited_list.append(i)
-            unvisited_list.remove(i)
+	    unvisited_list.remove(i) 
+	    for j in unvisited_list:
+		if shortest_distance[0] == j[0]:
+            	    unvisited_list.remove(j) # remove all same cities from the unvisited file 
             # Gets the neighbouring cities of the shortest distance
             # if the neighbouring cities is already in the visited_list:
             new_distance = distance[shortest_distance[0]]
             #if the new neighbouring cities are already in
             #the visited lists, remove them
-            for k in new_distance:
+	    new_distance_loop = new_distance[:]
+	    for k in new_distance_loop:
                 for m in visited_list:
-                    if k[1] == m[1]:
+		    if k[0] == m[0]:
                         new_distance.remove(k)
                         break
+
             #this for loop adds to the total distance
             #of the new neighbouring cities from the
             #point of origin of the outbreak.
             for element in new_distance:
+		# Append the new distance to that path as the shortest distance from 
+		# the source town to the town that was just expanded
+		# and add the distance from the just expanded town to this new town and append it to unvisited. 
                 x = element[1]
                 y = shortest_distance[1]
                 m = x + y
-                unvisited.append((element[0], m))
-
+                unvisited_list.append((element[0], m))
+	    break # Only 1 city is needed for this 
     return visited_list, unvisited_list
